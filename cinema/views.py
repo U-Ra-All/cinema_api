@@ -6,12 +6,14 @@ from cinema.models import (
     Genre,
     Actor,
     Movie,
+    MovieSession,
 )
 from cinema.serializers import (
     CinemaHallSerializer,
     GenreSerializer,
     ActorSerializer,
     MovieSerializer,
+    MovieSessionSerializer,
 )
 
 
@@ -49,3 +51,12 @@ class MovieViewSet(
 ):
     queryset = Movie.objects.prefetch_related("genres", "actors")
     serializer_class = MovieSerializer
+
+
+class MovieSessionViewSet(
+    mixins.CreateModelMixin,
+    mixins.ListModelMixin,
+    GenericViewSet,
+):
+    queryset = MovieSession.objects.select_related("movie", "cinema_hall")
+    serializer_class = MovieSessionSerializer
