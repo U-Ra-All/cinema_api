@@ -5,11 +5,13 @@ from cinema.models import (
     CinemaHall,
     Genre,
     Actor,
+    Movie,
 )
 from cinema.serializers import (
     CinemaHallSerializer,
     GenreSerializer,
     ActorSerializer,
+    MovieSerializer,
 )
 
 
@@ -38,3 +40,12 @@ class ActorViewSet(
 ):
     queryset = Actor.objects.all()
     serializer_class = ActorSerializer
+
+
+class MovieViewSet(
+    mixins.CreateModelMixin,
+    mixins.ListModelMixin,
+    GenericViewSet,
+):
+    queryset = Movie.objects.prefetch_related("genres", "actors")
+    serializer_class = MovieSerializer
