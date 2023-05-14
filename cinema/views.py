@@ -7,6 +7,7 @@ from cinema.models import (
     Actor,
     Movie,
     MovieSession,
+    Order,
 )
 from cinema.serializers import (
     CinemaHallSerializer,
@@ -14,6 +15,7 @@ from cinema.serializers import (
     ActorSerializer,
     MovieSerializer,
     MovieSessionSerializer,
+    OrderSerializer,
 )
 
 
@@ -60,3 +62,14 @@ class MovieSessionViewSet(
 ):
     queryset = MovieSession.objects.select_related("movie", "cinema_hall")
     serializer_class = MovieSessionSerializer
+
+
+class OrderViewSet(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    GenericViewSet,
+):
+    queryset = Order.objects.prefetch_related(
+        "tickets__movie_session__movie", "tickets__movie_session__cinema_hall"
+    )
+    serializer_class = OrderSerializer
