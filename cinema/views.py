@@ -17,7 +17,9 @@ from cinema.serializers import (
     MovieListSerializer,
     MovieDetailSerializer,
     MovieSessionSerializer,
-    OrderSerializer,
+    MovieSessionListSerializer,
+    MovieSessionDetailSerializer,
+    OrderSerializer
 )
 
 
@@ -67,13 +69,18 @@ class MovieViewSet(
         return MovieSerializer
 
 
-class MovieSessionViewSet(
-    mixins.CreateModelMixin,
-    mixins.ListModelMixin,
-    GenericViewSet,
-):
+class MovieSessionViewSet(viewsets.ModelViewSet):
     queryset = MovieSession.objects.select_related("movie", "cinema_hall")
     serializer_class = MovieSessionSerializer
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return MovieSessionListSerializer
+
+        if self.action == "retrieve":
+            return MovieSessionDetailSerializer
+
+        return MovieSessionSerializer
 
 
 class OrderViewSet(
