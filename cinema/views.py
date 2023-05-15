@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.db.models import F, Count
 from rest_framework import mixins, viewsets
 from rest_framework.viewsets import GenericViewSet
@@ -109,6 +111,21 @@ class MovieSessionViewSet(viewsets.ModelViewSet):
         )
     )
     serializer_class = MovieSessionSerializer
+
+    def get_queryset(self):
+        date = self.request.query_params.get("date")
+        movie_id_str = self.request.query_params.get("movie")
+
+        queryset = self.queryset
+
+        if date:
+            date = datetime.strptime(date, "%Y-%m-%d").date()
+            queryset = queryset.filter(show_time__date=date)
+
+        if movie_id_str:
+            queryset = queryset.filter(movie_id=int(movie_id_str))
+
+        return queryset
 
     def get_serializer_class(self):
         if self.action == "list":
