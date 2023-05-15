@@ -422,3 +422,49 @@ class AdminMovieApiTest(TestCase):
         response = self.client.delete(url)
 
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
+        
+        
+class MovieModelTest(TestCase):
+    @classmethod
+    def setUpTestData(cls):
+        sample_movie()
+
+    def test_title_label(self):
+        movie = Movie.objects.get(id=1)
+        field_label = movie._meta.get_field("title").verbose_name
+        self.assertEqual(field_label, "title")
+
+    def test_description_label(self):
+        movie = Movie.objects.get(id=1)
+        field_label = movie._meta.get_field("description").verbose_name
+        self.assertEqual(field_label, "description")
+
+    def test_duration_label(self):
+        movie = Movie.objects.get(id=1)
+        field_label = movie._meta.get_field("duration").verbose_name
+        self.assertEqual(field_label, "duration")
+
+    def test_genres_label(self):
+        movie = Movie.objects.get(id=1)
+        field_label = movie._meta.get_field("genres").verbose_name
+        self.assertEqual(field_label, "genres")
+
+    def test_actors_label(self):
+        movie = Movie.objects.get(id=1)
+        field_label = movie._meta.get_field("actors").verbose_name
+        self.assertEqual(field_label, "actors")
+
+    def test_image_label(self):
+        movie = Movie.objects.get(id=1)
+        field_label = movie._meta.get_field("image").verbose_name
+        self.assertEqual(field_label, "image")
+
+    def test_title_max_length(self):
+        movie = Movie.objects.get(id=1)
+        max_length = movie._meta.get_field("title").max_length
+        self.assertEqual(max_length, 255)
+
+    def test_movie_str(self):
+        movie = Movie.objects.get(id=1)
+        expected_object_name = f"{movie.title}"
+        self.assertEqual(str(movie), expected_object_name)
