@@ -70,6 +70,7 @@ class MovieDetailSerializer(MovieSerializer):
             "description",
             "genres",
             "actors",
+            "image"
         )
 
 
