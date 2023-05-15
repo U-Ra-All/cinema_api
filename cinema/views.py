@@ -1,4 +1,4 @@
-from rest_framework import mixins
+from rest_framework import mixins, viewsets
 from rest_framework.viewsets import GenericViewSet
 
 from cinema.models import (
@@ -14,6 +14,8 @@ from cinema.serializers import (
     GenreSerializer,
     ActorSerializer,
     MovieSerializer,
+    MovieListSerializer,
+    MovieDetailSerializer,
     MovieSessionSerializer,
     OrderSerializer,
 )
@@ -49,10 +51,20 @@ class ActorViewSet(
 class MovieViewSet(
     mixins.CreateModelMixin,
     mixins.ListModelMixin,
-    GenericViewSet,
+    mixins.RetrieveModelMixin,
+    viewsets.GenericViewSet,
 ):
     queryset = Movie.objects.prefetch_related("genres", "actors")
     serializer_class = MovieSerializer
+
+    def get_serializer_class(self):
+        if self.action == "list":
+            return MovieListSerializer
+
+        if self.action == "retrieve":
+            return MovieDetailSerializer
+
+        return MovieSerializer
 
 
 class MovieSessionViewSet(
