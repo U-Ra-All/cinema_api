@@ -1,3 +1,4 @@
+from django.db.models import F, Count
 from rest_framework import mixins, viewsets
 from rest_framework.viewsets import GenericViewSet
 
@@ -71,7 +72,16 @@ class MovieViewSet(
 
 
 class MovieSessionViewSet(viewsets.ModelViewSet):
-    queryset = MovieSession.objects.select_related("movie", "cinema_hall")
+    queryset = (
+        MovieSession.objects
+        .select_related("movie", "cinema_hall")
+        .annotate(
+            tickets_available=(
+                    F("cinema_hall__rows") * F("cinema_hall__seats_in_row")
+                    - Count("tickets")
+            )
+        )
+    )
     serializer_class = MovieSessionSerializer
 
     def get_serializer_class(self):
