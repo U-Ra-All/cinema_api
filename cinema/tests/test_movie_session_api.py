@@ -85,6 +85,20 @@ class AuthenticatedMovieSessionApiTest(TestCase):
         )
         self.client.force_authenticate(self.user)
 
+    def test_list_movie_sessions(self):
+        for _ in range(3):
+            sample_movie_session()
+
+        response = self.client.get(MOVIE_SESSION_URL)
+        movie_sessions = MovieSession.objects.all()
+        print(f"response.data: {response.data}")
+
+        serializer = MovieSessionListSerializer(movie_sessions, many=True)
+        print(f"serializer.data: {serializer.data}")
+
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.data, serializer.data)
+
     def test_filter_movie_sessions_by_movie(self):
         movie_session1 = sample_movie_session(
             movie=sample_movie(),
