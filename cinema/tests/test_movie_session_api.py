@@ -87,23 +87,19 @@ class AuthenticatedMovieSessionApiTest(TestCase):
 
     def test_filter_movie_sessions_by_movie(self):
         movie_session1 = sample_movie_session(
-            movie=sample_movie(title="TestTitle1"),
+            movie=sample_movie(),
         )
         movie_session2 = sample_movie_session(
-            movie=sample_movie(title="TestTitle2")
+            movie=sample_movie()
         )
 
-        print(MovieSession.objects.all())
-
-        response = self.client.get(MOVIE_SESSION_URL, {"movie.title": "TestTitle1"})
+        response = self.client.get(MOVIE_SESSION_URL, {"movie.id": "1"})
 
         serializer1 = MovieSessionListSerializer(movie_session1)
         serializer2 = MovieSessionListSerializer(movie_session2)
 
-        print(f"serializer1.data: {serializer1.data}, response.data: {response.data}")
-
-        self.assertEqual(serializer1.data.get("movie_title"), response.data[0]["movie_title"])
-        self.assertNotEqual(serializer2.data.get("movie_title"), response.data[0]["movie_title"])
+        self.assertEqual(serializer1.data.get("id"), response.data[0]["id"])
+        self.assertNotEqual(serializer2.data.get("id"), response.data[0]["id"])
 
     def test_filter_movie_sessions_by_date(self):
         movie_session1 = sample_movie_session(
