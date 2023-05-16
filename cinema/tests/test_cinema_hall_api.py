@@ -121,4 +121,4 @@ class CinemaHallModelTest(TestCase):
     def test_cinema_hall_capacity(self):
         cinema_hall = CinemaHall.objects.get(id=1)
         expected_capacity = cinema_hall.capacity
-        self.assertEqual(expected_capacity, 400)
+        self.assertEqual(expected_capacity, cinema_hall.rows * cinema_hall.seats_in_row)
