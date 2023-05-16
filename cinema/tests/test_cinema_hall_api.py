@@ -1,7 +1,3 @@
-import tempfile
-import os
-
-from PIL import Image
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
@@ -9,7 +5,7 @@ from django.urls import reverse
 from rest_framework.test import APIClient
 from rest_framework import status
 
-from cinema.models import  CinemaHall, Genre, Actor
+from cinema.models import CinemaHall
 from cinema.serializers import CinemaHallSerializer
 
 CINEMA_HALL_URL = reverse("cinema:cinemahall-list")
