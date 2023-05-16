@@ -107,7 +107,7 @@ class AuthenticatedMovieSessionApiTest(TestCase):
             movie=sample_movie()
         )
 
-        response = self.client.get(MOVIE_SESSION_URL, {"movie.id": "1"})
+        response = self.client.get(MOVIE_SESSION_URL, {"movie": "1"})
 
         serializer1 = MovieSessionListSerializer(movie_session1)
         serializer2 = MovieSessionListSerializer(movie_session2)
