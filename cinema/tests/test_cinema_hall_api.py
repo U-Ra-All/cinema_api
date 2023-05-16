@@ -22,10 +22,6 @@ def sample_cinema_hall(**params):
     return CinemaHall.objects.create(**defaults)
 
 
-def detail_url(cinema_hall_id):
-    return reverse("cinema:cinema_hall-detail", args=[cinema_hall_id])
-
-
 class UnauthenticatedCinemaHallApiTest(TestCase):
     def setUp(self) -> None:
         self.client = APIClient()
