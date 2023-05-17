@@ -81,6 +81,7 @@ class MovieImageUploadTests(TestCase):
 
     def tearDown(self):
         self.movie.image.delete()
+        self.movie_session = None
 
     def test_upload_image_to_movie(self):
         """Test uploading an image to movie"""
