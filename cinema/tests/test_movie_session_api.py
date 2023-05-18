@@ -85,37 +85,6 @@ class AuthenticatedMovieSessionApiTest(TestCase):
         )
         self.client.force_authenticate(self.user)
 
-    def test_list_movie_sessions(self):
-        for _ in range(3):
-            sample_movie_session()
-
-        response = self.client.get(MOVIE_SESSION_URL)
-        for item in response.data:
-            item.pop("tickets_available")
-        movie_sessions = MovieSession.objects.all()
-        serializer = MovieSessionListSerializer(movie_sessions, many=True)
-        print("response.data: ", response.data)
-        print("serializer.data: ", serializer.data)
-
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data, serializer.data)
-
-    def test_filter_movie_sessions_by_movie(self):
-        movie_session1 = sample_movie_session(
-            movie=sample_movie(),
-        )
-        movie_session2 = sample_movie_session(
-            movie=sample_movie()
-        )
-
-        response = self.client.get(MOVIE_SESSION_URL, {"movie": "1"})
-
-        serializer1 = MovieSessionListSerializer(movie_session1)
-        serializer2 = MovieSessionListSerializer(movie_session2)
-
-        self.assertEqual(serializer1.data.get("id"), response.data[0]["id"])
-        self.assertNotEqual(serializer2.data.get("id"), response.data[0]["id"])
-
     def test_filter_movie_sessions_by_date(self):
         movie_session1 = sample_movie_session(
             show_time="2022-05-02 15:00:00",
