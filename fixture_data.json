@@ -572,14 +572,6 @@
   }
 },
 {
-  "model": "sessions.session",
-  "pk": "90l15tjvyakltakvuisegcnsr0yzrwvn",
-  "fields": {
-    "session_data": ".eJxVjDsOwjAQBe_iGlnR-rOYkp4zWF57FweQI8VJFXF3iJQC2jczb1MxrUuNa-c5jkVdlFWn341SfnLbQXmkdp90ntoyj6R3RR-069tU-HU93L-Dmnr91uisPVtHHJzJqQBJIPAQxJmScSCEIh6NEHpGYBwCOCtIgVxASVa9P935N8s:1pzH1z:09zyUyG-Cby03ScaJZ3WZm7uV2addgfPTSORfTyU784",
-    "expire_date": "2023-05-31T13:17:27.654Z"
-  }
-},
-{
   "model": "cinema.cinemahall",
   "pk": 1,
   "fields": {
