@@ -1,13 +1,8 @@
-import tempfile
-import os
-
-from PIL import Image
 from django.contrib.auth import get_user_model
 from django.test import TestCase
 from django.urls import reverse
-
-from rest_framework.test import APIClient
 from rest_framework import status
+from rest_framework.test import APIClient
 
 from cinema.models import Movie, MovieSession, CinemaHall, Genre, Actor
 from cinema.serializers import MovieListSerializer, MovieDetailSerializer
@@ -84,8 +79,6 @@ class AuthenticatedMovieApiTest(TestCase):
             "test_password"
         )
         self.client.force_authenticate(self.user)
-
-
 
     def test_filter_movies_by_title(self):
         movie1 = sample_movie(title="Title1")
@@ -295,8 +288,8 @@ class AdminMovieApiTest(TestCase):
         response = self.client.delete(url)
 
         self.assertEqual(response.status_code, status.HTTP_405_METHOD_NOT_ALLOWED)
-        
-        
+
+
 class MovieModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):

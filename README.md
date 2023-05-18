@@ -16,7 +16,7 @@ python3 manage.py migrate
 python3 manage.py runserver # starts Django Server
 ```
 
-Create a file called .env in the same folder as the settings file. 
+Create a file called .env in the same folder as the settings file.
 Make sure to have the following development-specific values in there.
 You can find the example in [.env_sample](.env_sample)
 
